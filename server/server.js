@@ -20,8 +20,11 @@ mongoose.connect(MONGO_URI)
 
 // Basic Route
 app.get('/', (req, res) => {
-  res.send('Employee Management Backend is Running');
+  res.send('EM Backend is Running');
 });
+
+const employeeRoutes = require('./routes/employee.routes');
+app.use('/api/employees', employeeRoutes);
 
 // Start Server
 app.listen(PORT, () => {
