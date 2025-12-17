@@ -12,6 +12,19 @@ router.get('/', async (req, res) => {
   }
 });
 
+// GET Single Employee by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const employee = await Employee.findById(req.params.id);
+    if (!employee) {
+      return res.status(404).json({ message: 'Employee not found' });
+    }
+    res.json(employee);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // POST Create Employee
 router.post('/', async (req, res) => {
   const employee = new Employee(req.body);

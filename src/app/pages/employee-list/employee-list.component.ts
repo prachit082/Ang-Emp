@@ -8,11 +8,12 @@ import { EmployeeFormComponent } from '../employee-form/employee-form.component'
 @Component({
   selector: 'app-employee-list',
   imports: [CommonModule, EmployeeFormComponent],
-  templateUrl: './employee-list.component.html'
+  templateUrl: './employee-list.component.html',
 })
 export class EmployeeListComponent implements OnInit {
   employeeService = inject(EmployeeService);
   employees: Employee[] = [];
+  employee: Employee;
   employeeForm = signal(false);
   private readonly toast = inject(ToastrService);
 
@@ -23,17 +24,30 @@ export class EmployeeListComponent implements OnInit {
 
   loadEmployees() {
     this.employeeService.getEmployees().subscribe({
-      next: (data) => this.employees = data,
-      error: (e) => console.error(e)
+      next: (data) => (this.employees = data),
+      error: (e) => console.error(e),
     });
   }
 
+  getEmployeeById(id: string) {
+    this.employeeService.getEmployee(id).subscribe({
+      next: (data) => (this.employee = data),
+      error: (e) => console.error(e),
+    });
+    if (this.employee) {
+      this.deleteEmployee(id);
+    }
+  }
+
   deleteEmployee(id: string) {
-    if(confirm('Are you sure?')) {
+    const isConfirmed = confirm(
+      `Are you sure you want to remove ${this.employee?.name}?`,
+    );
+    if (isConfirmed) {
       this.employeeService.deleteEmployee(id).subscribe(() => {
         // Refresh list
         this.loadEmployees();
-        this.toast.success('Employee removed', 'Success');
+        this.toast.success(`${this.employee?.name} was removed`, 'Success');
       });
     }
   }

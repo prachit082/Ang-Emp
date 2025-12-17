@@ -1,52 +1,60 @@
 <div class="container mx-auto p-6">
-      <h2 class="text-3xl font-bold mb-6 text-gray-800">Employee List</h2>
-      <button (click)="employeeFormToggle()" class="bg-blue-600 text-white px-4 py-2 rounded mb-4 hover:bg-blue-700">
-        + Add Employee
-      </button>
+  <h2 class="text-3xl font-bold mb-6 text-gray-800">Employee List</h2>
+  <button
+    (click)="employeeFormToggle()"
+    class="bg-blue-600 text-white px-4 py-2 rounded mb-4 hover:bg-blue-700"
+  >
+    + Add Employee
+  </button>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        @for (emp of employees; track emp._id) {
-        <div class="bg-white shadow-lg rounded-lg p-6 border border-gray-200">
-          <h3 class="text-xl font-semibold text-gray-900">{{ emp.name }}</h3>
-          <p class="text-gray-600">{{ emp.position }}</p>
-          <p class="text-sm text-gray-500 mb-4">{{ emp.email }}</p>
-          <div class="flex justify-between items-center mt-4">
-            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">
-              {{ emp.department || 'General' }}
-            </span>
-            <button (click)="deleteEmployee(emp._id!)" class="text-red-600 hover:text-red-800">
-              Remove
-            </button>
-          </div>
-        </div>}
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    @for (emp of employees; track emp._id) {
+      <div class="bg-white shadow-lg rounded-lg p-6 border border-gray-200">
+        <h3 class="text-xl font-semibold text-gray-900">{{ emp.name }}</h3>
+        <p class="text-gray-600">{{ emp.position }}</p>
+        <p class="text-sm text-gray-500 mb-4">{{ emp.email }}</p>
+        <div class="flex justify-between items-center mt-4">
+          <span
+            class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded"
+          >
+            {{ emp.department || "General" }}
+          </span>
+          <button
+            (click)="getEmployeeById(emp._id!)"
+            class="text-red-600 hover:text-red-800 cursor-pointer"
+          >
+            Remove
+          </button>
+        </div>
       </div>
-    </div>
+    }
+  </div>
+</div>
 
-
-@if(employeeForm()){
-<div
-  class="h-screen w-screen fixed inset-0 grid place-items-center bg-zinc-800/50 z-20 overflow-hidden"
->
-  <div class="bg-slate-50 relative  rounded-md min-w-120 h-fit p-2">
-    <div class="flex justify-between items-center ml-3 mt-1">
-      <h2 class="text-sm font-bold">Add New Employee</h2>
-      <svg
-        (click)="employeeFormToggle()"
-        type="button"
-        class="absolute top-4 right-5 h-5 w-5 cursor-pointer text-black"
-        clip-rule="evenodd"
-        fill-rule="evenodd"
-        stroke-linejoin="round"
-        stroke-miterlimit="2"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"
-        />
-      </svg>
-    </div>
-    <app-employee-form (onClose)="closeForm()"></app-employee-form>
+@if (employeeForm()) {
+  <div
+    class="h-screen w-screen fixed inset-0 grid place-items-center bg-zinc-800/50 z-20 overflow-hidden"
+  >
+    <div class="bg-slate-50 relative rounded-md min-w-120 h-fit p-2">
+      <div class="flex justify-between items-center ml-3 mt-1">
+        <h2 class="text-sm font-bold">Add New Employee</h2>
+        <svg
+          (click)="employeeFormToggle()"
+          type="button"
+          class="absolute top-4 right-5 h-5 w-5 cursor-pointer text-black"
+          clip-rule="evenodd"
+          fill-rule="evenodd"
+          stroke-linejoin="round"
+          stroke-miterlimit="2"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"
+          />
+        </svg>
+      </div>
+      <app-employee-form (onClose)="closeForm()"></app-employee-form>
     </div>
   </div>
 }
