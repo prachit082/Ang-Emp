@@ -1,9 +1,9 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Employee = require('../models/Employee');
+const Employee = require("../models/Employee");
 
 // GET All Employees
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const employees = await Employee.find();
     res.json(employees);
@@ -13,11 +13,11 @@ router.get('/', async (req, res) => {
 });
 
 // GET Single Employee by ID
-router.get('/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const employee = await Employee.findById(req.params.id);
     if (!employee) {
-      return res.status(404).json({ message: 'Employee not found' });
+      return res.status(404).json({ message: "Employee not found" });
     }
     res.json(employee);
   } catch (err) {
@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST Create Employee
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   const employee = new Employee(req.body);
   try {
     const newEmployee = await employee.save();
@@ -37,10 +37,10 @@ router.post('/', async (req, res) => {
 });
 
 // DELETE Employee
-router.delete('/:id', async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
-    await Employee.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Employee deleted' });
+    const deletedEmployee = await Employee.findByIdAndDelete(req.params.id);
+    res.json(deletedEmployee);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

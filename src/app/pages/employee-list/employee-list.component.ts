@@ -31,12 +31,14 @@ export class EmployeeListComponent implements OnInit {
 
   getEmployeeById(id: string) {
     this.employeeService.getEmployee(id).subscribe({
-      next: (data) => (this.employee = data),
-      error: (e) => console.error(e),
+      next: (data) => {
+        this.employee = data;
+        this.deleteEmployee(id);
+      },
+      error: (err) => {
+        console.error(err);
+      },
     });
-    if (this.employee) {
-      this.deleteEmployee(id);
-    }
   }
 
   deleteEmployee(id: string) {
@@ -44,10 +46,10 @@ export class EmployeeListComponent implements OnInit {
       `Are you sure you want to remove ${this.employee?.name}?`,
     );
     if (isConfirmed) {
-      this.employeeService.deleteEmployee(id).subscribe(() => {
+      this.employeeService.deleteEmployee(id).subscribe((deletedEmp: any) => {
         // Refresh list
         this.loadEmployees();
-        this.toast.success(`${this.employee?.name} was removed`, 'Success');
+        this.toast.success(`${deletedEmp.name} was removed`, 'Success');
       });
     }
   }
