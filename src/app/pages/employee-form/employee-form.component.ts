@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EmployeeService } from '../../services/employee.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-employee-form',
@@ -14,6 +15,7 @@ export class EmployeeFormComponent {
   fb = inject(FormBuilder);
   http = inject(EmployeeService);
   router = inject(Router);
+  private readonly toast = inject(ToastrService);
 
   employeeForm = this.fb.group({
     name: ['', Validators.required],
@@ -27,6 +29,7 @@ export class EmployeeFormComponent {
     if (this.employeeForm.valid) {
       this.http.createEmployee(this.employeeForm.value as any).subscribe(() => {
         this.router.navigate(['/']);
+        this.toast.success('Employee added', 'Success');
       });
     }
   }

@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../models/employee.model';
+import { ToastrService } from 'ngx-toastr';
 import { EmployeeFormComponent } from '../employee-form/employee-form.component';
 
 @Component({
@@ -62,9 +63,11 @@ export class EmployeeListComponent implements OnInit {
   },
 ];
   employeeForm = false;
+  private readonly toast = inject(ToastrService);
 
   ngOnInit() {
     //this.loadEmployees();
+    //this.toast.info('Welcome to Employee Management System', 'Info');
   }
 
   loadEmployees() {
@@ -79,6 +82,7 @@ export class EmployeeListComponent implements OnInit {
       this.employeeService.deleteEmployee(id).subscribe(() => {
         // Refresh list
         this.loadEmployees();
+        this.toast.success('Employee removed', 'Success');
       });
     }
   }
