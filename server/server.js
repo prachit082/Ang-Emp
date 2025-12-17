@@ -5,23 +5,18 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
 // Database Connection
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/employee-db';
+const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI)
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.error(err));
-
-// Basic Route
-app.get('/', (req, res) => {
-  res.send('EM Backend is Running');
-});
+  .then(() => console.log('✅ MongoDB Atlas Connected Successfully!'))
+  .catch(err => console.error('❌ MongoDB Connection Error:', err));
 
 const employeeRoutes = require('./routes/employee.routes');
 app.use('/api/employees', employeeRoutes);

@@ -23,7 +23,7 @@
     </div>
 
 
-@if(employeeForm){
+@if(employeeForm()){
 <div
   class="h-screen w-screen fixed inset-0 grid place-items-center bg-zinc-800/50 z-20 overflow-hidden"
 >
@@ -46,7 +46,7 @@
         />
       </svg>
     </div>
-    <app-employee-form></app-employee-form>
+    <app-employee-form (onClose)="closeForm()"></app-employee-form>
     </div>
   </div>
 }
