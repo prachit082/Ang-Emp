@@ -2,11 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../models/employee.model';
-import { RouterLink } from '@angular/router';
+import { EmployeeFormComponent } from '../employee-form/employee-form.component';
 
 @Component({
   selector: 'app-employee-list',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, EmployeeFormComponent],
   templateUrl: './employee-list.component.html'
 })
 export class EmployeeListComponent implements OnInit {
@@ -61,9 +61,10 @@ export class EmployeeListComponent implements OnInit {
     salary: 75000,
   },
 ];
+  employeeForm = false;
 
   ngOnInit() {
-    this.loadEmployees();
+    //this.loadEmployees();
   }
 
   loadEmployees() {
@@ -80,5 +81,9 @@ export class EmployeeListComponent implements OnInit {
         this.loadEmployees();
       });
     }
+  }
+
+  employeeFormToggle() {
+    this.employeeForm = !this.employeeForm;
   }
 }

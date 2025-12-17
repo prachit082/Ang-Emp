@@ -8,5 +8,4 @@ import { EmployeeListComponent } from "./pages/employee-list/employee-list.compo
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'EmployeeManagement';
 }
