@@ -36,6 +36,26 @@ router.post("/", async (req, res) => {
   }
 });
 
+// PUT Update Employee
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+
+    const updatedEmployee = await Employee.findByIdAndUpdate(id, body, {
+      new: true,
+    });
+
+    if (!updatedEmployee) {
+      return res.status(404).json({ message: "Employee not found" });
+    }
+
+    res.json(updatedEmployee);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // DELETE Employee
 router.delete("/:id", async (req, res) => {
   try {

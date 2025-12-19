@@ -2,59 +2,98 @@
   <h2 class="text-3xl font-bold mb-6 text-gray-800">Employee List</h2>
   <button
     (click)="employeeFormToggle()"
-    class="bg-blue-600 text-white px-4 py-2 rounded mb-4 hover:bg-blue-700"
+    class="bg-blue-600 text-white px-4 py-2 rounded mb-4 hover:bg-blue-700 cursor-pointer"
   >
     + Add Employee
   </button>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     @for (emp of employees; track emp._id) {
-      <div class="bg-white shadow-lg rounded-lg p-6 border border-gray-200">
+    <div class="bg-white shadow-lg rounded-lg p-4 border border-gray-200">
+      <div class="flex justify-between items-center">
         <h3 class="text-xl font-semibold text-gray-900">{{ emp.name }}</h3>
-        <p class="text-gray-600">{{ emp.position }}</p>
-        <p class="text-sm text-gray-500 mb-4">{{ emp.email }}</p>
-        <div class="flex justify-between items-center mt-4">
-          <span
-            class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded"
-          >
-            {{ emp.department || "General" }}
-          </span>
+        <span
+          class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded"
+        >
+          {{ emp.position || "Software Engineer" }}
+        </span>
+      </div>
+      <p class="text-sm text-gray-500">{{ emp.email }}</p>
+      <p class="text-sm text-gray-500">{{ emp.contact }}</p>
+      <p class="text-gray-600 mb-2">{{ emp.salary }}/-</p>
+      <div class="flex justify-between items-center mt-2">
+        <span
+          class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded"
+        >
+          {{ emp.department || "General" }}
+        </span>
+
+        <div class="flex gap-2">
           <button
             (click)="getEmployeeById(emp._id!)"
-            class="text-red-600 hover:text-red-800 cursor-pointer"
+            class="text-gray-500 hover:text-gray-600 bg-slate-100 hover:bg-slate-200 border border-gray-800 text-sm p-2 py-0.5 pb-0.5 rounded-sm cursor-pointer"
           >
-            Remove
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 fill-current"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#e3e3e3"
+            >
+              <path
+                d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"
+              />
+            </svg>
+          </button>
+          <button
+            (click)="getEmployeeById(emp._id!)"
+            class="text-red-500 hover:text-red-600 bg-red-100 hover:bg-red-200 border border-red-800 text-sm p-2 py-0.5 pb-0.5 rounded-sm cursor-pointer"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 fill-current"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#e3e3e3"
+            >
+              <path
+                d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+              />
+            </svg>
           </button>
         </div>
       </div>
+    </div>
     }
   </div>
 </div>
 
 @if (employeeForm()) {
-  <div
-    class="h-screen w-screen fixed inset-0 grid place-items-center bg-zinc-800/50 z-20 overflow-hidden"
-  >
-    <div class="bg-slate-50 relative rounded-md min-w-120 h-fit p-2">
-      <div class="flex justify-between items-center ml-3 mt-1">
-        <h2 class="text-sm font-bold">Add New Employee</h2>
-        <svg
-          (click)="employeeFormToggle()"
-          type="button"
-          class="absolute top-4 right-5 h-5 w-5 cursor-pointer text-black"
-          clip-rule="evenodd"
-          fill-rule="evenodd"
-          stroke-linejoin="round"
-          stroke-miterlimit="2"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"
-          />
-        </svg>
-      </div>
-      <app-employee-form (onClose)="closeForm()"></app-employee-form>
+<div
+  class="h-screen w-screen fixed inset-0 grid place-items-center bg-zinc-800/50 z-20 overflow-hidden"
+>
+  <div class="bg-slate-50 relative rounded-md min-w-120 h-fit p-2">
+    <div class="flex justify-between items-center ml-3 mt-1">
+      <h2 class="text-sm font-bold">Add New Employee</h2>
+      <svg
+        (click)="employeeFormToggle()"
+        type="button"
+        class="absolute top-4 right-5 h-5 w-5 cursor-pointer text-black"
+        clip-rule="evenodd"
+        fill-rule="evenodd"
+        stroke-linejoin="round"
+        stroke-miterlimit="2"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"
+        />
+      </svg>
     </div>
+    <app-employee-form (onClose)="closeForm()"></app-employee-form>
   </div>
+</div>
 }

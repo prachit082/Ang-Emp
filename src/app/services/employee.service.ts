@@ -15,7 +15,7 @@ export class EmployeeService {
   private handleError(error: HttpErrorResponse): Observable<never> {
     console.error('An error occurred:', error);
     return throwError(
-      () => new Error('Something went wrong.Check your API and Services'),
+      () => new Error('Something went wrong.Check your API and Services')
     );
   }
 
@@ -37,6 +37,13 @@ export class EmployeeService {
   createEmployee(employee: Employee): Observable<Employee> {
     return this.http
       .post<Employee>(this.apiUrl + '/api/employees', employee)
+      .pipe(catchError(this.handleError));
+  }
+
+  //Put : Service to update employee by id
+  updateEmployee(id: string, employee: Employee): Observable<Employee> {
+    return this.http
+      .put<Employee>(this.apiUrl + id, employee)
       .pipe(catchError(this.handleError));
   }
 
