@@ -43,7 +43,7 @@ export class EmployeeService {
   //Put : Service to update employee by id
   updateEmployee(id: string, employee: Employee): Observable<Employee> {
     return this.http
-      .put<Employee>(this.apiUrl + id, employee)
+      .put<Employee>(this.apiUrl + '/api/employees/' + id, employee)
       .pipe(catchError(this.handleError));
   }
 
