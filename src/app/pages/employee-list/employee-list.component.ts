@@ -14,6 +14,7 @@ import { NgForm, FormsModule } from '@angular/forms';
 export class EmployeeListComponent implements OnInit {
   employeeService = inject(EmployeeService);
   employees: Employee[] = [];
+  searchEmployees: Employee[] = [];
   employee: Employee;
   employeeForm = signal(false);
   employeeEditForm = signal(false);
@@ -28,9 +29,24 @@ export class EmployeeListComponent implements OnInit {
 
   loadEmployees() {
     this.employeeService.getEmployees().subscribe({
-      next: (data) => (this.employees = data),
+      next: (data) => ((this.employees = data), (this.searchEmployees = data)),
       error: (e) => console.error(e),
     });
+  }
+
+  filterEmployees(searchTerm: string) {
+    if (!searchTerm) {
+      this.employees = this.searchEmployees;
+    } else {
+      const term = searchTerm.toLowerCase();
+      this.employees = this.searchEmployees.filter(
+        (emp) =>
+          emp.name.toLowerCase().includes(term) ||
+          emp.email.toLowerCase().includes(term) ||
+          emp.position.toLowerCase().includes(term) ||
+          emp.department.toLowerCase().includes(term)
+      );
+    }
   }
 
   getEmployeeByIdToDelete(id: string) {
