@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Employee } from '../models/employee.model';
 import { environment } from '../../environments/environment.development';
+import { DashboardStats } from '../models/dashboard.model';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +31,13 @@ export class EmployeeService {
   getEmployee(id: string): Observable<Employee> {
     return this.http
       .get<Employee>(this.apiUrl + '/api/employees/' + id)
+      .pipe(catchError(this.handleError));
+  }
+
+  // Get : Service to fetch dashboard stats
+  getDashboardStats(): Observable<DashboardStats> {
+    return this.http
+      .get<DashboardStats>(this.apiUrl + '/api/employees/dashboard-stats')
       .pipe(catchError(this.handleError));
   }
 

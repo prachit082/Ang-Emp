@@ -25,6 +25,36 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// GET Dashboard Stats
+router.get("/dashboard-stats", async (req, res) => {
+  try {
+    const stats = await Employee.aggregate([
+      {
+        $facet: {
+          // 1. General Totals
+          totalStats: [
+            {
+              $group: {
+                _id: null,
+                totalEmployees: { $sum: 1 },
+                totalSalary: { $sum: "$salary" },
+                avgSalary: { $avg: "$salary" },
+              },
+            },
+          ],
+          // 2. Grouping by Department for Pie Chart
+          deptStats: [{ $group: { _id: "$department", count: { $sum: 1 } } }],
+          // 3. Grouping by Position for Bar Chart
+          positionStats: [{ $group: { _id: "$position", count: { $sum: 1 } } }],
+        },
+      },
+    ]);
+    res.json(stats[0]);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // POST Create Employee
 router.post("/", async (req, res) => {
   const employee = new Employee(req.body);
