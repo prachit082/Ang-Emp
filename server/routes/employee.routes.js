@@ -2,29 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Employee = require("../models/Employee");
 
-// GET All Employees
-router.get("/", async (req, res) => {
-  try {
-    const employees = await Employee.find();
-    res.json(employees);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// GET Single Employee by ID
-router.get("/:id", async (req, res) => {
-  try {
-    const employee = await Employee.findById(req.params.id);
-    if (!employee) {
-      return res.status(404).json({ message: "Employee not found" });
-    }
-    res.json(employee);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
 // GET Dashboard Stats
 router.get("/dashboard-stats", async (req, res) => {
   try {
@@ -50,6 +27,29 @@ router.get("/dashboard-stats", async (req, res) => {
       },
     ]);
     res.json(stats[0]);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// GET All Employees
+router.get("/", async (req, res) => {
+  try {
+    const employees = await Employee.find();
+    res.json(employees);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// GET Single Employee by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const employee = await Employee.findById(req.params.id);
+    if (!employee) {
+      return res.status(404).json({ message: "Employee not found" });
+    }
+    res.json(employee);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
