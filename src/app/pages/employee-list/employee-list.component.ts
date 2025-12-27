@@ -105,6 +105,48 @@ export class EmployeeListComponent implements OnInit {
     }
   }
 
+  exportToCsv() {
+    const headers = [
+      'Name',
+      'Email',
+      'Contact',
+      'Position',
+      'Department',
+      'Salary',
+    ];
+
+    const csvRows = this.employees.map((emp) => {
+      return [
+        emp.name,
+        emp.email,
+        emp.contact || '',
+        emp.position,
+        emp.department || '',
+        emp.salary || 0,
+      ]
+        .map((value) => {
+          const stringValue = String(value).replace(/"/g, '""');
+          return `"${stringValue}"`;
+        })
+        .join(',');
+    });
+
+    const csvContent = [headers.join(','), ...csvRows].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `Employees_${new Date()
+      .toLocaleDateString('en-GB')
+      .replace(/\//g, '-')}.csv`;
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
   employeeFormToggle() {
     this.employeeForm.set(!this.employeeForm());
   }
