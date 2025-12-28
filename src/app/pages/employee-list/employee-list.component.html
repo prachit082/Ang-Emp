@@ -6,7 +6,7 @@
         (click)="employeeFormToggle()"
         class="bg-blue-600 text-white text-sm px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
       >
-        + Add
+        Add
       </button>
       <button
         (click)="exportToCsv()"
@@ -26,7 +26,7 @@
             d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
           ></path>
         </svg>
-        <span>Export CSV</span>
+        <span>Export</span>
       </button>
     </div>
     <div class="relative w-[34%]">
@@ -123,41 +123,43 @@
 
 @if (employeeForm()) {
 <div
-  class="h-screen w-screen fixed inset-0 grid place-items-center bg-zinc-800/50 z-20 overflow-hidden"
+  class="fixed inset-0 grid place-items-center bg-zinc-800/50 z-50 overflow-y-auto p-4"
 >
-  <div class="bg-slate-50 relative rounded-md min-w-120 h-fit p-2">
-    <div class="flex justify-between items-center ml-3 mt-1">
-      <h2 class="text-sm font-bold">Add New Employee</h2>
+  <div
+    class="bg-slate-50 relative rounded-md w-full max-w-lg h-fit p-4 shadow-xl"
+  >
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-bold text-gray-800">Add New Employee</h2>
       <svg
         (click)="employeeFormToggle()"
-        type="button"
-        class="absolute top-4 right-5 h-5 w-5 cursor-pointer text-black"
-        clip-rule="evenodd"
-        fill-rule="evenodd"
-        stroke-linejoin="round"
-        stroke-miterlimit="2"
+        class="h-6 w-6 cursor-pointer text-gray-600 hover:text-gray-900"
         viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
       >
         <path
-          d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
         />
       </svg>
     </div>
+
     <app-employee-form (onClose)="closeForm()"></app-employee-form>
   </div>
 </div>
 } @if (employeeEditForm()) {
 <div
-  class="h-screen w-screen fixed inset-0 grid place-items-center bg-zinc-800/50 z-20 overflow-hidden"
+  class="fixed inset-0 grid place-items-center bg-zinc-800/50 z-50 overflow-y-auto p-4"
 >
-  <div class="bg-slate-50 relative rounded-md min-w-120 h-fit p-2">
-    <div class="flex justify-between items-center ml-3 mt-1">
-      <h2 class="text-sm font-bold">Edit Employee</h2>
+  <div
+    class="bg-slate-50 relative rounded-md w-full max-w-lg h-fit p-4 shadow-xl"
+  >
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-bold text-gray-800">Edit Employee</h2>
       <svg
         (click)="employeeEditFormToggle()"
         type="button"
-        class="absolute top-4 right-5 h-5 w-5 cursor-pointer text-black"
+        class="h-6 w-6 cursor-pointer text-gray-600 hover:text-gray-900"
         clip-rule="evenodd"
         fill-rule="evenodd"
         stroke-linejoin="round"
@@ -170,135 +172,115 @@
         />
       </svg>
     </div>
-    <div class="container mx-auto p-4 max-w-lg">
-      <form
-        #employeeEdit="ngForm"
-        class="bg-white shadow-md rounded px-6 pt-2 pb-4 mb-4"
-      >
-        <div class="flex items-center gap-2 mb-4">
-          <div class="w-1/2">
-            <label class="block text-gray-700 text-sm font-bold mb-2"
-              >Name
-              <strong class="text-red-600 font-extrabold">*</strong></label
-            >
-            <input
-              id="name"
-              name="name"
-              [(ngModel)]="employee.name"
-              [required]="true"
-              (input)="onInputAlphabetsOnly($event)"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="text"
-              placeholder=""
-            />
-          </div>
-          <div class="w-1/2">
-            <label class="block text-gray-700 text-sm font-bold mb-2"
-              >Email
-              <strong class="text-red-600 font-extrabold">*</strong></label
-            >
-            <input
-              id="email"
-              name="email"
-              [(ngModel)]="employee.email"
-              [required]="true"
-              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-              (input)="onInputDigitsOnly($event)"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="email"
-              placeholder=""
-            />
-          </div>
-        </div>
 
-        <div class="flex items-center gap-2 mb-4">
-          <div class="w-1/2">
-            <label class="block text-gray-700 text-sm font-bold mb-2"
-              >Position
-              <strong class="text-red-600 font-extrabold">*</strong></label
-            >
-            <input
-              id="position"
-              name="position"
-              [(ngModel)]="employee.position"
-              [required]="true"
-              (input)="onInputAlphabetsOnly($event)"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="text"
-              placeholder="Software Engineer"
-            />
-          </div>
-          <div class="w-1/2">
-            <label class="block text-gray-700 text-sm font-bold mb-2"
-              >Department
-              <strong class="text-red-600 font-extrabold">*</strong></label
-            >
-            <input
-              id="department"
-              name="department"
-              [required]="true"
-              [(ngModel)]="employee.department"
-              (input)="onInputAlphabetsOnly($event)"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="text"
-              placeholder="IT"
-            />
-          </div>
-        </div>
-
-        <div class="flex items-center gap-2 mb-4">
-          <div class="w-1/2">
-            <label class="block text-gray-700 text-sm font-bold mb-2"
-              >Contact
-              <strong class="text-red-600 font-extrabold">*</strong></label
-            >
-            <input
-              id="contact"
-              name="contact"
-              [(ngModel)]="employee.contact"
-              [required]="true"
-              (input)="onInputDigitsOnly($event)"
-              (input)="onInputNumbersOnly($event)"
-              maxlength="14"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="text"
-              placeholder="992309322933"
-            />
-          </div>
-          <div class="w-1/2">
-            <label class="block text-gray-700 text-sm font-bold mb-2"
-              >Salary
-              <strong class="text-red-600 font-extrabold">*</strong></label
-            >
-            <input
-              id="salary"
-              name="salary"
-              [(ngModel)]="employee.salary"
-              [required]="true"
-              (input)="onInputDigitsOnly($event)"
-              (input)="onInputNumbersOnly($event)"
-              minlength="4"
-              maxlength="8"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="text"
-              placeholder="25000"
-            />
-          </div>
-        </div>
-
-        <div class="flex items-center justify-end">
-          <button
-            type="button"
-            (click)="updateEmployee()"
-            [disabled]="!employeeEdit.valid"
-            [ngClass]="{ 'cursor-not-allowed': !employeeEdit.valid }"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50 cursor-pointer"
+    <form
+      #employeeEdit="ngForm"
+      class="bg-white shadow-sm rounded border border-gray-200 p-4"
+    >
+      <div class="flex flex-col md:flex-row gap-4 mb-4">
+        <div class="w-full md:w-1/2">
+          <label class="block text-gray-700 text-sm font-bold mb-2"
+            >Name <strong class="text-red-600">*</strong></label
           >
-            Submit
-          </button>
+          <input
+            name="name"
+            [(ngModel)]="employee.name"
+            [required]="true"
+            (input)="onInputAlphabetsOnly($event)"
+            class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="text"
+          />
         </div>
-      </form>
-    </div>
+        <div class="w-full md:w-1/2">
+          <label class="block text-gray-700 text-sm font-bold mb-2"
+            >Email <strong class="text-red-600">*</strong></label
+          >
+          <input
+            name="email"
+            [(ngModel)]="employee.email"
+            [required]="true"
+            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+            class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="email"
+          />
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-4 mb-4">
+        <div class="w-full md:w-1/2">
+          <label class="block text-gray-700 text-sm font-bold mb-2"
+            >Position <strong class="text-red-600">*</strong></label
+          >
+          <input
+            name="position"
+            [(ngModel)]="employee.position"
+            [required]="true"
+            (input)="onInputAlphabetsOnly($event)"
+            class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="text"
+          />
+        </div>
+        <div class="w-full md:w-1/2">
+          <label class="block text-gray-700 text-sm font-bold mb-2"
+            >Department <strong class="text-red-600">*</strong></label
+          >
+          <input
+            name="department"
+            [(ngModel)]="employee.department"
+            [required]="true"
+            (input)="onInputAlphabetsOnly($event)"
+            class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="text"
+          />
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-4 mb-6">
+        <div class="w-full md:w-1/2">
+          <label class="block text-gray-700 text-sm font-bold mb-2"
+            >Contact <strong class="text-red-600">*</strong></label
+          >
+          <input
+            name="contact"
+            [(ngModel)]="employee.contact"
+            [required]="true"
+            (input)="onInputNumbersOnly($event)"
+            maxlength="14"
+            class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="text"
+          />
+        </div>
+        <div class="w-full md:w-1/2">
+          <label class="block text-gray-700 text-sm font-bold mb-2"
+            >Salary <strong class="text-red-600">*</strong></label
+          >
+          <input
+            name="salary"
+            [(ngModel)]="employee.salary"
+            [required]="true"
+            (input)="onInputNumbersOnly($event)"
+            maxlength="8"
+            class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="text"
+          />
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end">
+        <button
+          type="button"
+          (click)="updateEmployee()"
+          [disabled]="!employeeEdit.valid"
+          [ngClass]="{
+            'opacity-50 cursor-not-allowed': !employeeEdit.valid,
+            'hover:bg-blue-700': employeeEdit.valid
+          }"
+          class="bg-blue-600 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline transition duration-150"
+        >
+          Update Employee
+        </button>
+      </div>
+    </form>
   </div>
 </div>
 }

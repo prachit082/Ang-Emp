@@ -1,6 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -10,6 +10,7 @@ import { RouterLink } from '@angular/router';
 })
 export class NavbarComponent {
   isDropdownOpen = signal(false);
+  private router = inject(Router);
 
   toggleDropdown() {
     this.isDropdownOpen.set(!this.isDropdownOpen());
@@ -22,5 +23,9 @@ export class NavbarComponent {
 
   closeDropdown() {
     this.isDropdownOpen.set(false);
+  }
+
+  isEmployeesActive(): boolean {
+    return this.router.isActive('/employees', true);
   }
 }
