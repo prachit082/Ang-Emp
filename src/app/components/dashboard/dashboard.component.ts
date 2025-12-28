@@ -11,13 +11,14 @@ import { EmployeeService } from '../../services/employee.service';
 import { DashboardStats } from '../../models/dashboard.model';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
+import { CountUpDirective } from 'ngx-countup';
 
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CountUpDirective],
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
